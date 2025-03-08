@@ -1,3 +1,8 @@
+using Company.G01.DAL.Data.Contexts;
+using Company.G02.BLL.Interfices;
+using Company.G02.BLL.Repositres;
+using Microsoft.EntityFrameworkCore;
+
 namespace Company.G01.PL
 {
     public class Program
@@ -8,6 +13,14 @@ namespace Company.G01.PL
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();//Register Built-In Mvc Services
+            builder.Services.AddScoped<IDepartmentRepositry, DepartmentRepositry>();//Allow DI For DepartmentRepositry
+            builder.Services.AddDbContext<CompanyDbContext>(options =>
+            {
+
+
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+            });//Allow DI For CompanyDbContext
 
             var app = builder.Build();
 
