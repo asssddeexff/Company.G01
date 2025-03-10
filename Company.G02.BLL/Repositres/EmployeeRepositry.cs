@@ -9,45 +9,14 @@ using Company.G02.BLL.Interfices;
 
 namespace Company.G02.BLL.Repositres
 {
-    public class EmployeeRepositry : IEmployeeRepositry
+    public class EmployeeRepositry :GenericRepositry<Employee> , IEmployeeRepositry
     {
-        private readonly CompanyDbContext _context;
-
-        public EmployeeRepositry(CompanyDbContext context)
+        public EmployeeRepositry(CompanyDbContext context) : base(context)//Ask CLR Create Object From CompanyDbContext
         {
-              _context = context;
+            
         }
 
-        public IEnumerable<Employee> GetAll()
-        {
-            return _context.Employees.ToList();
-        }
-        public Employee? Get(int id)
-        {
-          return _context.Employees.Find(id);
-        }
 
-        public int Add(Employee model)
-        {
-             _context.Employees.Add(model);
-            return _context.SaveChanges();
-        }
 
-        public int Update(Employee model)
-        {
-
-            _context.Employees.Update(model);
-            return _context.SaveChanges();
-        }
-        public int Delete(Employee model)
-        {
-
-            _context.Employees.Remove(model);
-            return _context.SaveChanges();
-        }
-
-       
-
-        
     }
 }

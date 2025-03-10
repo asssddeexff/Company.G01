@@ -7,14 +7,14 @@ using Company.G01.DAL.Models;
 
 namespace Company.G02.BLL.Interfices
 {
-    public interface IDepartmentRepositry
+    public interface IDepartmentRepositry :IGenericRepositry<Department>
     {
-        IEnumerable<Department> GetAll();
-        Department? Get(int id);
+    //    IEnumerable<Department> GetAll();
+    //    Department? Get(int id);
 
-        int Add(Department model);
-        int Update(Department model);
-        int Delete(Department model);
+    //    int Add(Department model);
+    //    int Update(Department model);
+    //    int Delete(Department model);
 
     }
 }

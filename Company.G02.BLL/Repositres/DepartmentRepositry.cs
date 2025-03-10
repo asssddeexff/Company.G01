@@ -9,49 +9,17 @@ using Company.G02.BLL.Interfices;
 
 namespace Company.G02.BLL.Repositres
 {
-    public class DepartmentRepositry : IDepartmentRepositry
+    public class DepartmentRepositry : GenericRepositry<Department>, IDepartmentRepositry
     {
-        private readonly CompanyDbContext _context;//Null
-        //Ask CLR Create Object From CompanyDbContext
-        public DepartmentRepositry(CompanyDbContext context)
-        {
-            _context = context;
-        }
-        public IEnumerable<Department> GetAll()
+
+        public DepartmentRepositry(CompanyDbContext context) : base(context)
         {
             
-            return _context.Departments.ToList();
-        }
-        public Department? Get(int id)
-        {
-            return _context.Departments.Find(id);
-        }
-        public int Add(Department model)
-        {
-         
-             _context.Departments.Add(model);
-            return _context.SaveChanges();
         }
 
-        public int Update(Department model)
-        {
-
-           
-            _context.Departments.Update(model);
-            return _context.SaveChanges();
-        }
-
-        public int Delete(Department model)
-        {
-
-       
-            _context.Departments.Remove(model);
-            return _context.SaveChanges();
-        }
-
-     
 
 
-        
+
+
     }
 }
