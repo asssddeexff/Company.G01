@@ -7,14 +7,15 @@ using Company.G01.DAL.Models;
 
 namespace Company.G02.BLL.Interfices
 {
-    public interface IEmployeeRepositry
+    public interface IEmployeeRepositry : IGenericRepositry<Employee>
     {
+       // Employee? GetByName(string name);
 
-        IEnumerable<Employee> GetAll();
-        Employee? Get(int id);
+        //IEnumerable<Employee> GetAll();
+        //Employee? Get(int id);
 
-        int Add(Employee model);
-        int Update(Employee model);
-        int Delete( Employee model);
+        //int Add(Employee model);
+        //int Update(Employee model);
+        //int Delete( Employee model);
     }
 }
