@@ -14,6 +14,7 @@ namespace Company.G01.PL
             // Add services to the container.
             builder.Services.AddControllersWithViews();//Register Built-In Mvc Services
             builder.Services.AddScoped<IDepartmentRepositry, DepartmentRepositry>();//Allow DI For DepartmentRepositry
+            builder.Services.AddScoped<IEmployeeRepositry, EmployeeRepositry>();//Allow DI For EmployeeRepositry
             builder.Services.AddDbContext<CompanyDbContext>(options =>
             {
 
