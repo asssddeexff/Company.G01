@@ -77,17 +77,30 @@ namespace Company.G01.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([FromRoute] int id, Employee model)
+        public IActionResult Edit([FromRoute] int id, CreateEmployeeDtos model)
         {
 
 
 
             if (ModelState.IsValid)
             {
-                if (id != model.Id) return BadRequest();//400
+                //if (id != model.Id) return BadRequest();//400
+                var employee = new Employee()
+                {
+                    Id=id,
+                    Name = model.Name,
+                    Address = model.Address,
+                    Age = model.Age,
+                    CreateAt = model.CreateAt,
+                    HiringDate = model.HiringDate,
+                    Email = model.Email,
+                    IsActive = model.IsActive,
+                    IsDeleted = model.IsDeleted,
+                    Phone = model.Phone,
+                    Salary = model.Salary,
+                };
 
-
-                var count = _employeeRepositry.Update(model);
+                var count = _employeeRepositry.Update(employee);
                 if (count > 0)
                 {
                     return RedirectToAction(nameof(Index));
