@@ -68,10 +68,25 @@ namespace Company.G01.PL.Controllers
         public IActionResult Edit(int? id)
         {
 
-            //if (id is null) return BadRequest("Invalid ID");//400
-            //var department = _departmentRepositry.Get(id.Value);
-            //if (department is null) return NotFound(new { statusCode = 400, message = $"Department With Id{id}is Not Found" });
-            return Details(id, "Edit");
+            if (id is null) return BadRequest("Invalid ID");//400
+            var employee = _employeeRepositry.Get(id.Value);
+            if (employee is null) return NotFound(new { statusCode = 400, message = $"Department With Id{id}is Not Found" });
+            var employeeDto = new CreateEmployeeDtos()
+            {
+                
+                Name = employee.Name,
+                Address = employee.Address,
+                Age = employee.Age,
+                CreateAt = employee.CreateAt,
+                HiringDate = employee.HiringDate,
+                Email = employee.Email,
+                IsActive = employee.IsActive,
+                IsDeleted = employee.IsDeleted,
+                Phone = employee.Phone,
+                Salary = employee.Salary,
+            };
+
+            return View(employeeDto);
 
         }
 
