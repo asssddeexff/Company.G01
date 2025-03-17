@@ -18,7 +18,18 @@ namespace Company.G01.PL.Controllers
         {
 
             var employees = _employeeRepositry.GetAll();
+            //Dictionary:3 Property
+            //1.ViewData:Transafer Extra Information From Controller (Action) To View
+
+            //ViewData["Message"] = "Hello From ViewData";
+
+
+            //2.ViewBag :Transafer Extra Information From Controller (Action) To View
+
+           // ViewBag.Message = "Hello From ViewBag";
+            //3.TempData
             return View(employees);
+          
         }
         [HttpGet]
         public IActionResult Create()
