@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Employee\EmployeeParatialView\**" />
+    <Content Remove="Views\Employee\EmployeeParatialView\**" />
+    <EmbeddedResource Remove="Views\Employee\EmployeeParatialView\**" />
+    <None Remove="Views\Employee\EmployeeParatialView\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.13">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
