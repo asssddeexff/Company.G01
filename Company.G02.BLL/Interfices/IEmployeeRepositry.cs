@@ -9,7 +9,7 @@ namespace Company.G02.BLL.Interfices
 {
     public interface IEmployeeRepositry : IGenericRepositry<Employee>
     {
-       // Employee? GetByName(string name);
+        List<Employee>? GetByName(string name);
 
         //IEnumerable<Employee> GetAll();
         //Employee? Get(int id);

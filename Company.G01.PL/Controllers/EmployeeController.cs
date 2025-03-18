@@ -8,16 +8,29 @@ namespace Company.G01.PL.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeRepositry _employeeRepositry;
+        private readonly IDepartmentRepositry _departmentRepositry;
+
         //Ask Clr Create Object From DepartmentRepositry
-        public EmployeeController(IEmployeeRepositry employeeRepositry)
+        public EmployeeController(IEmployeeRepositry employeeRepositry,IDepartmentRepositry departmentRepositry)
         {
             _employeeRepositry = employeeRepositry;
+            _departmentRepositry = departmentRepositry;
         }
         [HttpGet] // Get: Department/Index
-        public IActionResult Index()
-        {
+        public IActionResult Index(string?SearchInput)
 
-            var employees = _employeeRepositry.GetAll();
+        {
+            IEnumerable<Employee> employees;
+            if(string.IsNullOrEmpty(SearchInput))
+            {
+                 employees = _employeeRepositry.GetAll();
+            }
+            else
+            {
+                 employees = _employeeRepositry.GetByName(SearchInput);
+            }
+
+          
             //Dictionary:3 Property
             //1.ViewData:Transafer Extra Information From Controller (Action) To View
 
@@ -34,6 +47,8 @@ namespace Company.G01.PL.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            var departments = _departmentRepositry.GetAll();
+            ViewData["departments"] = departments;
             return View();
         }
 
@@ -54,10 +69,12 @@ namespace Company.G01.PL.Controllers
                     IsDeleted = model.IsDeleted,
                     Phone = model.Phone,
                     Salary = model.Salary,
+                    DepartmentId = model.DepartmentId,
                 };
                 var Count = _employeeRepositry.Add(employee);
                 if (Count > 0)
                 {
+                    TempData["Message"] = "Employee Is Created!!";
                     return RedirectToAction(nameof(Index));
                 }
 
@@ -78,7 +95,8 @@ namespace Company.G01.PL.Controllers
         [HttpGet]
         public IActionResult Edit(int? id)
         {
-
+            var departments = _departmentRepositry.GetAll();
+            ViewData["departments"] = departments;
             if (id is null) return BadRequest("Invalid ID");//400
             var employee = _employeeRepositry.Get(id.Value);
             if (employee is null) return NotFound(new { statusCode = 400, message = $"Department With Id{id}is Not Found" });
@@ -95,6 +113,7 @@ namespace Company.G01.PL.Controllers
                 IsDeleted = employee.IsDeleted,
                 Phone = employee.Phone,
                 Salary = employee.Salary,
+
             };
 
             return View(employeeDto);
@@ -124,6 +143,8 @@ namespace Company.G01.PL.Controllers
                     IsDeleted = model.IsDeleted,
                     Phone = model.Phone,
                     Salary = model.Salary,
+                    DepartmentId = model.DepartmentId,
+
                 };
 
                 var count = _employeeRepositry.Update(employee);
