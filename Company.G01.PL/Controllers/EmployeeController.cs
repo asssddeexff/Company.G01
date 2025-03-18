@@ -1,4 +1,5 @@
-﻿using Company.G01.DAL.Models;
+﻿using AutoMapper;
+using Company.G01.DAL.Models;
 using Company.G01.PL.Dtos;
 using Company.G02.BLL.Interfices;
 using Microsoft.AspNetCore.Mvc;
@@ -9,12 +10,18 @@ namespace Company.G01.PL.Controllers
     {
         private readonly IEmployeeRepositry _employeeRepositry;
         private readonly IDepartmentRepositry _departmentRepositry;
+        private readonly IMapper _mapper;
 
         //Ask Clr Create Object From DepartmentRepositry
-        public EmployeeController(IEmployeeRepositry employeeRepositry,IDepartmentRepositry departmentRepositry)
+        public EmployeeController(
+            IEmployeeRepositry employeeRepositry,
+            IDepartmentRepositry departmentRepositry,
+            IMapper mapper
+            )
         {
             _employeeRepositry = employeeRepositry;
             _departmentRepositry = departmentRepositry;
+            _mapper = mapper;
         }
         [HttpGet] // Get: Department/Index
         public IActionResult Index(string?SearchInput)
@@ -57,26 +64,30 @@ namespace Company.G01.PL.Controllers
         {
             if (ModelState.IsValid) // Server Side Validation
             {
-                var employee = new Employee()
-                {
-                    Name = model.Name,
-                    Address = model.Address,
-                    Age = model.Age,
-                    CreateAt = model.CreateAt,
-                    HiringDate = model.HiringDate,
-                    Email = model.Email,    
-                    IsActive = model.IsActive,
-                    IsDeleted = model.IsDeleted,
-                    Phone = model.Phone,
-                    Salary = model.Salary,
-                    DepartmentId = model.DepartmentId,
-                };
-                var Count = _employeeRepositry.Add(employee);
-                if (Count > 0)
-                {
-                    TempData["Message"] = "Employee Is Created!!";
-                    return RedirectToAction(nameof(Index));
-                }
+
+                //Manual Mapping
+                //var employee = new Employee()
+                //{
+                //    Name = model.Name,
+                //    Address = model.Address,
+                //    Age = model.Age,
+                //    CreateAt = model.CreateAt,
+                //    HiringDate = model.HiringDate,
+                //    Email = model.Email,
+                //    IsActive = model.IsActive,
+                //    IsDeleted = model.IsDeleted,
+                //    Phone = model.Phone,
+                //    Salary = model.Salary,
+                //    DepartmentId = model.DepartmentId,
+                //};
+                var employee = _mapper.Map<Employee>(model);
+                    var Count = _employeeRepositry.Add(employee);
+                    if (Count > 0)
+                    {
+                        TempData["Message"] = "Employee Is Created!!";
+                        return RedirectToAction(nameof(Index));
+                    }
+                
 
             }
             return View(model);
@@ -89,7 +100,8 @@ namespace Company.G01.PL.Controllers
             if (id is null) return BadRequest("Invalid ID");//400
             var employee = _employeeRepositry.Get(id.Value);
             if (employee is null) return NotFound(new { statusCode = 400, message = $"Employee With Id{id}is Not Found" });
-            return View(viewName,employee);
+       
+            return View(employee);
         }
 
         [HttpGet]
