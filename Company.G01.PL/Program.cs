@@ -1,4 +1,6 @@
 using Company.G01.DAL.Data.Contexts;
+using Company.G01.PL.Mapping;
+using Company.G01.PL.Services;
 using Company.G02.BLL.Interfices;
 using Company.G02.BLL.Repositres;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +25,17 @@ namespace Company.G01.PL
 
             });//Allow DI For CompanyDbContext
 
+            //builder.Services.AddAutoMapper(typeof(EmployeeProfile));
+            builder.Services.AddAutoMapper(M => M.AddProfile(new EmployeeProfile()));
+
+            //Life Time
+            //builder.Services.AddScoped();//Create Object Life Time Per Request -Unreachable Object
+            //builder.Services.AddTransient();//Create Object Life Time Per Operation
+            //builder.Services.AddSingleton();//Create Object Life Time Per App
+
+            builder.Services.AddScoped<IScopedSerivece,ScopedServicecs>();//Per Request
+            builder.Services.AddTransient<ITransentService, TransentService>();//Per Operation
+            builder.Services.AddSingleton<ISengletonService,SengletonSerivce>();//Per App
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
