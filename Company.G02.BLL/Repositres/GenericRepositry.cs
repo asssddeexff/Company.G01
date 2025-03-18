@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Company.G01.DAL.Data.Contexts;
 using Company.G01.DAL.Models;
 using Company.G02.BLL.Interfices;
+using Microsoft.EntityFrameworkCore;
 
 namespace Company.G02.BLL.Repositres
 {
@@ -19,10 +20,18 @@ namespace Company.G02.BLL.Repositres
         }
         public IEnumerable<T> GetAll()
         {
+            if(typeof(T)== typeof(Employee))
+            {
+                return (IEnumerable<T>)_context.Employees.Include(E=>E.Department).ToList();
+            }
             return _context.Set<T>().ToList();
         }
         public T? Get(int id)
         {
+            if (typeof(T) == typeof(Employee))
+            {
+                return _context.Employees.Include(E => E.Department).FirstOrDefault(E=>E.Id== id) as T;
+            }
             return _context.Set<T>().Find(id);
         }
 
