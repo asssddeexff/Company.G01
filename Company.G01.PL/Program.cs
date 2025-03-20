@@ -1,6 +1,7 @@
 using Company.G01.DAL.Data.Contexts;
 using Company.G01.PL.Mapping;
 using Company.G01.PL.Services;
+using Company.G02.BLL;
 using Company.G02.BLL.Interfices;
 using Company.G02.BLL.Repositres;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,9 @@ namespace Company.G01.PL
             builder.Services.AddControllersWithViews();//Register Built-In Mvc Services
             builder.Services.AddScoped<IDepartmentRepositry, DepartmentRepositry>();//Allow DI For DepartmentRepositry
             builder.Services.AddScoped<IEmployeeRepositry, EmployeeRepositry>();//Allow DI For EmployeeRepositry
+
+            builder.Services.AddScoped<IUnitOfWork , UnitOfWork>(); 
+
             builder.Services.AddDbContext<CompanyDbContext>(options =>
             {
 
