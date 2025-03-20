@@ -26,5 +26,7 @@ namespace Company.G01.PL.Dtos
         [DisplayName("Date Of Creation")]
         public DateTime CreateAt { get; set; }
         public int? DepartmentId { get; set; }
+        public string? ImageName { get; set; }
+        public IFormFile? Image {  get; set; }
     }
 }

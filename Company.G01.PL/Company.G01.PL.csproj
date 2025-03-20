@@ -21,6 +21,8 @@
 
   <ItemGroup>
     <Folder Include="Views\Employee\EmployeeParatialView\" />
+    <Folder Include="wwwroot\Files\Images\" />
+    <Folder Include="wwwroot\Files\Videos\" />
   </ItemGroup>
 
 </Project>
