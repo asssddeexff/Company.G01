@@ -2,10 +2,12 @@
 using Company.G01.PL.Dtos;
 using Company.G02.BLL.Interfices;
 using Company.G02.BLL.Repositres;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Company.G01.PL.Controllers
 {
+    [Authorize]
     //MVC Controller
     public class DepartmentController : Controller
     {
