@@ -1,9 +1,11 @@
 using Company.G01.DAL.Data.Contexts;
+using Company.G01.DAL.Models;
 using Company.G01.PL.Mapping;
 using Company.G01.PL.Services;
 using Company.G02.BLL;
 using Company.G02.BLL.Interfices;
 using Company.G02.BLL.Repositres;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Company.G01.PL
@@ -40,6 +42,19 @@ namespace Company.G01.PL
             builder.Services.AddScoped<IScopedSerivece,ScopedServicecs>();//Per Request
             builder.Services.AddTransient<ITransentService, TransentService>();//Per Operation
             builder.Services.AddSingleton<ISengletonService,SengletonSerivce>();//Per App
+
+            builder.Services.AddIdentity<AppUser,IdentityRole>()
+                .AddEntityFrameworkStores<CompanyDbContext>();
+
+            builder.Services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = "/Account/SignIn";
+
+
+            });
+
+          
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -54,6 +69,9 @@ namespace Company.G01.PL
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseAuthorization();
 
