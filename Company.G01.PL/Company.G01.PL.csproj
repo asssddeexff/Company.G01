@@ -20,6 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Role\EmployeeParatialView\" />
+    <Folder Include="Views\User\EmployeeParatialView\" />
     <Folder Include="Views\Employee\EmployeeParatialView\" />
     <Folder Include="wwwroot\Files\Images\" />
     <Folder Include="wwwroot\Files\Videos\" />
