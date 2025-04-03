@@ -7,17 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 
+
 namespace Company.G01.PL.Controllers
 {
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityApplicationUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public RoleController(RoleManager<IdentityRole> roleManager,UserManager<IdentityApplicationUser> userManager)
+        public RoleController(RoleManager<IdentityRole> roleManager,UserManager<AppUser> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+           
         }
         [HttpGet]
         public async Task<IActionResult> Index(string? SearchInput)
@@ -200,11 +202,11 @@ namespace Company.G01.PL.Controllers
            var role = await _roleManager.FindByIdAsync(roleId);
             if (role is null) 
                 return NotFound();
-            var usersInRole = new List<UserInRoleViewModel>();
+            var usersInRole = new List<UsersInRoleViewModel>();
             var users = await _userManager.Users.ToListAsync();
             foreach (var user in users)
             {
-                var userInRole = new UserInRoleViewModel()
+                var userInRole = new UsersInRoleViewModel()
                 {
                     UserId = user.Id,
                     UserName = user.UserName,
@@ -220,7 +222,7 @@ namespace Company.G01.PL.Controllers
 
                 usersInRole.Add(userInRole);
             }
-
+            return View(usersInRole);
 
         }
 
